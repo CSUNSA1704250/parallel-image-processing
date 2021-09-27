@@ -1,2 +1,5 @@
+# General
+*.txt
+
 # Executables
 *.out
