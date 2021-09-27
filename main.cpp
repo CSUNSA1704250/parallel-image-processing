@@ -5,13 +5,36 @@
 
 using namespace cimg_library;
 
-std::vector<int> histogram(const CImg<unsigned char>& image, int channel) {
-  std::vector<int> res(256, 0);
-  for (int i = 0; i < image.width(); i += 1) {
-    for (int j = 0; j < image.height(); j += 1) {
+// Calculate the histogram of an image region
+void histogram(const CImg<unsigned char>& image, const int x0, const int y0,
+               const int x1, const int y1, const int channel,
+               std::vector<int>& res) {
+  for (int i = x0; i < x1; i++) {
+    for (int j = y0; j < y1; j++) {
       res[image(i, j, channel)]++;
     }
   }
+}
+
+// Returns pixel intensity on given channel
+std::vector<int> image_analysis(const CImg<unsigned char>& image,
+                                const int channel) {
+  std::vector<int> res(256, 0);
+
+  const int width = image.width();
+  const int height = image.height();
+
+  // clang-format off
+  histogram(image, 0, 0, width / 4, height,
+            channel, res);
+  histogram(image, (width / 4), 0, (width / 4) * 2, height,
+            channel, res);
+  histogram(image, (width / 4) * 2, 0, (width / 4) * 3, height,
+            channel, res);
+  histogram(image, (width / 4) * 3, 0, width, height,
+            channel, res);
+  // clang-format on
+
   return res;
 }
 
@@ -20,7 +43,7 @@ int main() {
 
   CImgDisplay main_disp(image, "Lena <3");
 
-  std::vector<int> res = histogram(image, 0);
+  std::vector<int> res = image_analysis(image, 0);
 
   for (int x : res) {
     std::cout << x << std::endl;
