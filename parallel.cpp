@@ -51,8 +51,6 @@ std::vector<int> image_analysis(const CImg<unsigned char>& image,
 int main() {
   CImg<unsigned char> image("examples/data/lena.jpg");
 
-  CImgDisplay main_disp(image, "Lena <3");
-
   std::vector<int> res = image_analysis(image, 0);
 
   for (int x : res) {
