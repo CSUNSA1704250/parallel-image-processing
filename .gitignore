@@ -4,5 +4,11 @@
 # General
 *.txt
 
+# IDE
+.vscode
+
+# External headers
+CImg.h
+
 # Executables
 *.out
