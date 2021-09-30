@@ -6,7 +6,7 @@
 using namespace cimg_library;
 
 // Calculate the histogram of an image region
-void histogram(const CImg<unsigned char>& image, const int x0, const int y0,
+void Histogram(const CImg<unsigned char>& image, const int x0, const int y0,
                const int x1, const int y1, const int channel,
                std::vector<int>& res) {
   for (int i = x0; i < x1; i++) {
@@ -17,21 +17,21 @@ void histogram(const CImg<unsigned char>& image, const int x0, const int y0,
 }
 
 // Returns pixel intensity on given channel
-std::vector<int> image_analysis(const CImg<unsigned char>& image,
-                                const int channel) {
+std::vector<int> ImageAnalysis(const CImg<unsigned char>& image,
+                               const int channel) {
   std::vector<int> res(256, 0);
 
   const int width = image.width();
   const int height = image.height();
 
   // clang-format off
-  histogram(image, 0, 0, width / 4, height,
+  Histogram(image, 0, 0, width / 4, height,
             channel, res);
-  histogram(image, (width / 4), 0, (width / 4) * 2, height,
+  Histogram(image, (width / 4), 0, (width / 4) * 2, height,
             channel, res);
-  histogram(image, (width / 4) * 2, 0, (width / 4) * 3, height,
+  Histogram(image, (width / 4) * 2, 0, (width / 4) * 3, height,
             channel, res);
-  histogram(image, (width / 4) * 3, 0, width, height,
+  Histogram(image, (width / 4) * 3, 0, width, height,
             channel, res);
   // clang-format on
 
@@ -41,7 +41,7 @@ std::vector<int> image_analysis(const CImg<unsigned char>& image,
 int main() {
   CImg<unsigned char> image("examples/data/lena.jpg");
 
-  std::vector<int> res = image_analysis(image, 0);
+  std::vector<int> res = ImageAnalysis(image, 0);
 
   for (int x : res) {
     std::cout << x << std::endl;
