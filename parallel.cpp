@@ -58,12 +58,23 @@ std::vector<int> ImageAnalysis(const CImg<unsigned char>& image,
   return res;
 }
 
+// Returns pixel intensity on given channel, full speed ahead!
+std::vector<int> ImageAnalysis(const CImg<unsigned char>& image,
+                               const int channel) {
+  const int num_threads = std::thread::hardware_concurrency();
+  return ImageAnalysis(image, channel, num_threads);
+}
+
 int main() {
   CImg<unsigned char> image("examples/data/lena.jpg");
 
+  /*
   const int kColor = 0;
   const int kThreads = 4;
   std::vector<int> res = ImageAnalysis(image, kColor, kThreads);
+  */
+  const int kColor = 0;
+  std::vector<int> res = ImageAnalysis(image, kColor);
 
   for (int x : res) {
     std::cout << x << std::endl;
