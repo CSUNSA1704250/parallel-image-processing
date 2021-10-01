@@ -21,13 +21,17 @@ std::vector<std::pair<int, int>> Regions(const CImg<unsigned char>& image,
   return regions;
 }
 
+std::mutex hist_i_mutex;  // Protect access to hist[i]
+
 // Calculate the histogram of an image region
 void Histogram(const CImg<unsigned char>& image, const std::pair<int, int>& x0,
                const std::pair<int, int>& x1, const int channel,
-               std::vector<int>& res) {
+               std::vector<int>& hist) {
   for (int i = x0.first; i < x1.first; i++) {
     for (int j = x0.second; j < x1.second; j++) {
-      res[image(i, j, channel)]++;
+      hist_i_mutex.lock();
+      hist[image(i, j, channel)]++;
+      hist_i_mutex.unlock();
     }
   }
 }
@@ -36,7 +40,7 @@ void Histogram(const CImg<unsigned char>& image, const std::pair<int, int>& x0,
 std::vector<int> ImageAnalysis(const CImg<unsigned char>& image,
                                const int channel, const int num_threads) {
   const int kIntensity = 256;
-  std::vector<int> res(kIntensity, 0);
+  std::vector<int> hist(kIntensity, 0);
   std::vector<std::pair<int, int>> regions_coords = Regions(image, num_threads);
 
   // spawn threads
@@ -44,10 +48,7 @@ std::vector<int> ImageAnalysis(const CImg<unsigned char>& image,
   for (int i = 0; i < num_threads; i++) {
     threads.push_back(std::thread(
         Histogram, std::ref(image), std::ref(regions_coords[2 * i]),
-        std::ref(regions_coords[2 * i + 1]), channel, std::ref(res)));
-    for (auto x : res) {
-      std::cout << x << std::endl;
-    }
+        std::ref(regions_coords[2 * i + 1]), channel, std::ref(hist)));
   }
 
   // sync threads
@@ -55,7 +56,7 @@ std::vector<int> ImageAnalysis(const CImg<unsigned char>& image,
     t.join();
   }
 
-  return res;
+  return hist;
 }
 
 // Returns pixel intensity on given channel, full speed ahead!
@@ -71,12 +72,12 @@ int main() {
   /*
   const int kColor = 0;
   const int kThreads = 4;
-  std::vector<int> res = ImageAnalysis(image, kColor, kThreads);
+  std::vector<int> hist = ImageAnalysis(image, kColor, kThreads);
   */
   const int kColor = 0;
-  std::vector<int> res = ImageAnalysis(image, kColor);
+  std::vector<int> hist = ImageAnalysis(image, kColor);
 
-  for (int x : res) {
+  for (int x : hist) {
     std::cout << x << std::endl;
   }
 
