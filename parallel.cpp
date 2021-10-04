@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 #include <thread>
 #include <vector>
 
@@ -66,20 +67,28 @@ std::vector<int> ImageAnalysis(const CImg<unsigned char>& image,
   return ImageAnalysis(image, channel, num_threads);
 }
 
-int main() {
-  CImg<unsigned char> image("examples/data/lena.jpg");
+int main(int argc, char* argv[]) {
+  if (argc == 4) {
+    std::map<std::string, int> colors{{"RED", 0}, {"GREEN", 1}, {"BLUE", 2}};
 
-  /*
-  const int kColor = 0;
-  const int kThreads = 4;
-  std::vector<int> hist = ImageAnalysis(image, kColor, kThreads);
-  */
-  const int kColor = 0;
-  std::vector<int> hist = ImageAnalysis(image, kColor);
+    // Input image
+    CImg<unsigned char> image(argv[1]);
+    // Histogram color intensity
+    const int kColor = colors[argv[2]];
+    // Number of threads
+    const int kThreads = std::atoi(argv[3]);
+    std::vector<int> hist = ImageAnalysis(image, kColor, kThreads);
 
-  for (int x : hist) {
-    std::cout << x << std::endl;
+    for (int x : hist) {
+      std::cout << x << std::endl;
+    }
+
+    return EXIT_SUCCESS;
+  } else {
+    std::cout << "Please follow template." << std::endl;
+    std::cout << "./paralle.out <input_image> <color> <num_threads>"
+              << std::endl;
+
+    return EXIT_FAILURE;
   }
-
-  return 0;
 }
