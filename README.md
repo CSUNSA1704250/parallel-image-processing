@@ -4,6 +4,7 @@ Alumno: Jerson Zúñiga Coayla
 
 ## Requirements
 - [CImg, C++ template image processing toolkit](https://www.cimg.eu/index.html).
+- [Python packages](requirements.txt).
 
 ## Compile
 ---
@@ -19,7 +20,7 @@ g++ -o parallel.out parallel.cpp -O2 -lm -lpthread -lX11
 ```
 ### MacOS
 ```sh
-g++ -o parallel.out parallel.cpp -O2 -lm -lpthread -I/usr/X11R6/include -L/usr/X11R6/lib -lm -lpthread -lX11
+clang++ -std=c++17 -o parallel.out src/parallel.cpp -O2 -lm -lpthread -I/usr/X11R6/include -L/usr/X11R6/lib -lm -lpthread -lX11
 ```
 
 ## Run
