@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
     auto diff = end - start;
 
     // print num_threads and elapsed time in milliseconds
-    std::cout << kThreads << ", "
+    std::cout << kThreads << ","
               << std::chrono::duration<double, std::milli>(diff).count()
               << std::endl;
 
