@@ -12,3 +12,5 @@ for ((i = 1 ; i <= iterations ; i++)); do
   ./parallel.out $input_image $color $num_threads >> $results
   num_threads=$((num_threads*2))
 done
+
+python3 speedup.py

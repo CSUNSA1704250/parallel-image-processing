@@ -27,3 +27,8 @@ clang++ -std=c++17 -o parallel.out src/parallel.cpp -O2 -lm -lpthread -I/usr/X11
 ```sh
 ./parallel.out <input_image> <color> <num_threads>
 ```
+### Speedup
+The [speedup.sh](speedup.sh) script benchmark [parallel.cpp](src/parallel.cpp) on multiple cores. It outputs a result image of execution time by number of threads.
+```sh
+./speedup.sh
+```
