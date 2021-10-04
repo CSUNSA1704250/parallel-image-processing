@@ -15,14 +15,14 @@ You must also have installed [ImageMagick](https://imagemagick.org/script/downlo
 
 ### Linux
 ```sh
-g++ -o main.out main.cpp -O2 -lm -lpthread -lX11
+g++ -o parallel.out parallel.cpp -O2 -lm -lpthread -lX11
 ```
 ### MacOS
 ```sh
-g++ -o main.out main.cpp -O2 -lm -lpthread -I/usr/X11R6/include -L/usr/X11R6/lib -lm -lpthread -lX11
+g++ -o parallel.out parallel.cpp -O2 -lm -lpthread -I/usr/X11R6/include -L/usr/X11R6/lib -lm -lpthread -lX11
 ```
 
 ## Run
 ```sh
-./main.out
+./parallel.out <input_image> <color> <num_threads>
 ```
