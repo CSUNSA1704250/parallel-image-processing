@@ -12,3 +12,6 @@ CImg.h
 
 # Executables
 *.out
+
+# Results
+speedup.csv
