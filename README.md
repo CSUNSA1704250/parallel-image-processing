@@ -16,7 +16,7 @@ You must also have installed [ImageMagick](https://imagemagick.org/script/downlo
 
 ### Linux
 ```sh
-g++ -o parallel.out parallel.cpp -O2 -lm -lpthread -lX11
+g++ -std=c++17 -o parallel.out src/parallel.cpp -O2 -lm -lpthread -lX11
 ```
 ### MacOS
 ```sh
