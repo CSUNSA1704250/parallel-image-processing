@@ -7,13 +7,6 @@ Alumno: Jerson Zúñiga Coayla
 - [Python packages](requirements.txt).
 
 ## Compile
----
-**NOTE**
-
-You must also have installed [ImageMagick](https://imagemagick.org/script/download.php) because `CImg` needs to recognize picture formats such as `jpg`, `png`, among others.
-
----
-
 ### Linux
 ```sh
 g++ -std=c++17 -o parallel.out src/parallel.cpp -O2 -lm -lpthread -lX11
