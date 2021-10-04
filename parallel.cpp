@@ -77,11 +77,17 @@ int main(int argc, char* argv[]) {
     const int kColor = colors[argv[2]];
     // Number of threads
     const int kThreads = std::atoi(argv[3]);
-    std::vector<int> hist = ImageAnalysis(image, kColor, kThreads);
 
-    for (int x : hist) {
-      std::cout << x << std::endl;
-    }
+    auto start = std::chrono::steady_clock::now();
+    std::vector<int> hist = ImageAnalysis(image, kColor, kThreads);
+    auto end = std::chrono::steady_clock::now();
+
+    auto diff = end - start;
+
+    // print num_threads and elapsed time in milliseconds
+    std::cout << kThreads << ", "
+              << std::chrono::duration<double, std::milli>(diff).count()
+              << std::endl;
 
     return EXIT_SUCCESS;
   } else {
