@@ -3,6 +3,7 @@
 
 # General
 *.txt
+!requirements.txt
 
 # IDE
 .vscode
@@ -15,3 +16,7 @@ CImg.h
 
 # Results
 speedup.csv
+speedup.png
+
+# Environments
+.venv
