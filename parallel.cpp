@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
     return EXIT_SUCCESS;
   } else {
     std::cout << "Please follow template." << std::endl;
-    std::cout << "./paralle.out <input_image> <color> <num_threads>"
+    std::cout << "./parallel.out <input_image> <color> <num_threads>"
               << std::endl;
 
     return EXIT_FAILURE;
