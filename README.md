@@ -21,7 +21,14 @@ clang++ -std=c++17 -o parallel.out src/parallel.cpp -O2 -lm -lpthread -I/usr/X11
 ./parallel.out <input_image> <color> <num_threads>
 ```
 ### Speedup
-The [speedup.sh](speedup.sh) script benchmark [parallel.cpp](src/parallel.cpp) on multiple cores. It outputs a result image of execution time by number of threads.
+The [speedup.sh](speedup.sh) script benchmarks [parallel.cpp](src/parallel.cpp) on multiple cores. It outputs a result image of execution time by number of threads.
+1. Configuration of `speedup.sh`: 
+```sh
+input_image=<input_image>
+color=<color> # Available colors are RED, GREEN and BLUE
+```
+
+2. Running
 ```sh
 ./speedup.sh
 ```
