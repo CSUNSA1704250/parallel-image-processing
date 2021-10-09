@@ -49,6 +49,7 @@ int main(int argc, char* argv[]) {
 
     auto diff = end - start;
 
+    std::cout << std::endl;
     std::cout << "Elapsed time in milliseconds: "
               << std::chrono::duration<double, std::milli>(diff).count()
               << std::endl;
