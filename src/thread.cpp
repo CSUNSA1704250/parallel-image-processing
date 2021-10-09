@@ -87,10 +87,6 @@ int main(int argc, char* argv[]) {
     std::vector<int> hist = ImageAnalysis(image, kColor, kThreads);
     auto end = std::chrono::steady_clock::now();
 
-    for (auto x : hist) {
-      std::cout << x << std::endl;
-    }
-
     auto diff = end - start;
 
     // print num_threads and elapsed time in milliseconds
