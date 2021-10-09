@@ -9,19 +9,19 @@ Alumno: Jerson Zúñiga Coayla
 ## Compile
 ### Linux
 ```sh
-g++ -std=c++17 -o parallel.out src/parallel.cpp -O2 -lm -lpthread -lX11
+g++ -std=c++17 -o thread.out src/thread.cpp -O2 -lm -lpthread -lX11
 ```
 ### MacOS
 ```sh
-clang++ -std=c++17 -o parallel.out src/parallel.cpp -O2 -lm -lpthread -I/usr/X11R6/include -L/usr/X11R6/lib -lm -lpthread -lX11
+clang++ -std=c++17 -o thread.out src/thread.cpp -O2 -lm -lpthread -I/usr/X11R6/include -L/usr/X11R6/lib -lm -lpthread -lX11
 ```
 
 ## Run
 ```sh
-./parallel.out <input_image> <color> <num_threads>
+./thread.out <input_image> <color> <num_threads>
 ```
 ### Speedup
-The [speedup.sh](speedup.sh) script benchmarks [parallel.cpp](src/parallel.cpp) on multiple cores. It outputs a result image of execution time by number of threads.
+The [speedup.sh](speedup.sh) script benchmarks [thread.cpp](src/thread.cpp) on multiple cores. It outputs a result image of execution time by number of threads.
 1. Configuration of `speedup.sh`: 
 ```sh
 input_image=<input_image>
