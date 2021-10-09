@@ -1,6 +1,5 @@
 #include <iostream>
 #include <map>
-#include <mutex>
 #include <thread>
 #include <vector>
 
@@ -23,17 +22,13 @@ std::vector<std::pair<int, int>> Regions(const CImg<unsigned char>& image,
   return regions;
 }
 
-std::mutex hist_i_mutex;  // Protect access to hist[i]
-
 // Calculate the histogram of an image region
 void Histogram(const CImg<unsigned char>& image, const std::pair<int, int>& x0,
                const std::pair<int, int>& x1, const int channel,
                std::vector<int>& hist) {
   for (int i = x0.first; i < x1.first; i++) {
     for (int j = x0.second; j < x1.second; j++) {
-      hist_i_mutex.lock();
       hist[image(i, j, channel)]++;
-      hist_i_mutex.unlock();
     }
   }
 }
@@ -43,6 +38,8 @@ std::vector<int> ImageAnalysis(const CImg<unsigned char>& image,
                                const int channel, const int num_threads) {
   const int kIntensity = 256;
   std::vector<int> hist(kIntensity, 0);
+  std::vector<std::vector<int>> results(num_threads,
+                                        std::vector<int>(kIntensity, 0));
   std::vector<std::pair<int, int>> regions_coords = Regions(image, num_threads);
 
   // spawn threads
@@ -50,12 +47,18 @@ std::vector<int> ImageAnalysis(const CImg<unsigned char>& image,
   for (int i = 0; i < num_threads; i++) {
     threads.push_back(std::thread(
         Histogram, std::ref(image), std::ref(regions_coords[2 * i]),
-        std::ref(regions_coords[2 * i + 1]), channel, std::ref(hist)));
+        std::ref(regions_coords[2 * i + 1]), channel, std::ref(results[i])));
   }
 
   // sync threads
   for (auto& t : threads) {
     t.join();
+  }
+
+  for (int i = 0; i < kIntensity; i++) {
+    for (auto& h : results) {
+      hist[i] += h[i];
+    }
   }
 
   return hist;
