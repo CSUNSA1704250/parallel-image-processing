@@ -55,6 +55,7 @@ std::vector<int> ImageAnalysis(const CImg<unsigned char>& image,
     t.join();
   }
 
+  // sum region histograms
   for (int i = 0; i < kIntensity; i++) {
     for (auto& h : results) {
       hist[i] += h[i];
@@ -85,6 +86,10 @@ int main(int argc, char* argv[]) {
     auto start = std::chrono::steady_clock::now();
     std::vector<int> hist = ImageAnalysis(image, kColor, kThreads);
     auto end = std::chrono::steady_clock::now();
+
+    for (auto x : hist) {
+      std::cout << x << std::endl;
+    }
 
     auto diff = end - start;
 
