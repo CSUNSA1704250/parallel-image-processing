@@ -43,7 +43,7 @@ std::vector<int> ImageAnalysis(const CImg<unsigned char>& image,
   std::vector<std::pair<int, int>> regions_coords = Regions(image, kThreads);
 
 // spawn threads
-#pragma omp parallel for num_threads(num_threads)
+#pragma omp parallel for num_threads(kThreads)
   for (int i = 0; i < kThreads; i++) {
     Histogram(image, regions_coords[2 * i], regions_coords[2 * i + 1], channel,
               results[i]);
